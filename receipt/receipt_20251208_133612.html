@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt</title>
+    <style>
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            body {
+                margin: 0;
+                padding: 20px;
+            }
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .receipt-container {
+            background: white;
+            max-width: 600px;
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            padding: 30px;
+            margin: 20px;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+        .logo {
+            max-width: 120px;
+            max-height: 120px;
+            margin: 0 auto 15px;
+            display: block;
+        }
+        .store-tagline {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        .receipt-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .info-item {
+            text-align: center;
+        }
+        .info-label {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .info-value {
+            font-weight: bold;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+        }
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        th {
+            padding: 12px 8px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+        th:last-child, td:last-child {
+            text-align: right;
+        }
+        td {
+            padding: 12px 8px;
+            border-bottom: 1px solid #e9ecef;
+            color: #333;
+        }
+        tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+        .totals {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 2px solid #667eea;
+        }
+        .total-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 1em;
+        }
+        .total-line.total-final {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #667eea;
+            margin-top: 10px;
+            padding-top: 15px;
+            border-top: 3px solid #667eea;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+            color: #666;
+            font-size: 0.85em;
+        }
+        .print-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        .print-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+        }
+        .print-button:active {
+            transform: translateY(0);
+        }
+        @media print {
+            body {
+                background: white;
+            }
+            .receipt-container {
+                box-shadow: none;
+                margin: 0;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="receipt-container">
+        <div class="header">
+            <img src="LOGO.jpeg" alt="Logo" class="logo" onerror="this.style.display='none'">
+            <div class="store-tagline">Thank you for your purchase!</div>
+        </div>
+        
+        <div class="receipt-info">
+            <div class="info-item">
+                <div class="info-label">Receipt #</div>
+                <div class="info-value">20251208_133612</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Date & Time</div>
+                <div class="info-value">2025-12-08 13:36:12</div>
+            </div>
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>12</td>
+                    <td>Jovan White Musk Edc Perfume For Men 88Ml</td>
+                    <td>Perfume</td>
+                    <td>€300.00</td>
+                    <td>1</td>
+                    <td>€300.00</td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td>Azzaro The Most Wanted Intense Men Edp 100ml</td>
+                    <td>Perfume</td>
+                    <td>€110.00</td>
+                    <td>1</td>
+                    <td>€110.00</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>ADIDAS BODY SPRAY WOMEN CLIMACOOL 150ML</td>
+                    <td>Body Spray</td>
+                    <td>€30.00</td>
+                    <td>1</td>
+                    <td>€30.00</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="totals">
+            <div class="total-line">
+                <span>Subtotal (excl. VAT):</span>
+                <span>€440.00</span>
+            </div>
+            <div class="total-line">
+                <span>VAT (20%):</span>
+                <span>€88.00</span>
+            </div>
+            <div class="total-line total-final">
+                <span>Total (incl. VAT):</span>
+                <span>€528.00</span>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Thank you for your purchase!</p>
+            <p style="margin-top: 10px;">Generated on 2025-12-08 13:36:12</p>
+        </div>
+    </div>
+    
+    <button class="print-button no-print" onclick="printReceipt()">
+        🖨️ Print / Download PDF
+    </button>
+    
+    <script>
+        function printReceipt() {
+            window.print();
+        }
+        
+        // Also allow Ctrl+P
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+                e.preventDefault();
+                printReceipt();
+            }
+        });
+    </script>
+</body>
+</html>

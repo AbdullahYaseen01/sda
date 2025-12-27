@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt</title>
+    <style>
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            body {
+                margin: 0;
+                padding: 10px;
+            }
+            .receipt-container {
+                margin: 0;
+                padding: 15px;
+                box-shadow: none;
+            }
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: white;
+        }
+        .receipt-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .logo {
+            max-width: 80px;
+            max-height: 80px;
+            margin: 0 auto 10px;
+            display: block;
+        }
+        .receipt-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+        th {
+            padding: 8px 5px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+            font-weight: bold;
+        }
+        th:last-child, td:last-child {
+            text-align: right;
+        }
+        td {
+            padding: 6px 5px;
+            border-bottom: 1px solid #ddd;
+        }
+        .totals {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid #333;
+        }
+        .total-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+        }
+        .total-final {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-top: 5px;
+            padding-top: 8px;
+            border-top: 1px solid #333;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+            font-size: 0.85em;
+            color: #666;
+        }
+        .print-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 0.9em;
+            cursor: pointer;
+            z-index: 1000;
+        }
+        .print-button:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="receipt-container">
+        <div class="header">
+            <img src="LOGO.jpeg" alt="Logo" class="logo" onerror="this.style.display='none'">
+            <div>Receipt #20251208_223901</div>
+            <div style="font-size: 0.85em; color: #666; margin-top: 5px;">2025-12-08 22:39:01</div>
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Sapil Women Pink Nancy Body Spray 200ml</td>
+                    <td>€50.00</td>
+                    <td>2</td>
+                    <td>€100.00</td>
+                </tr>
+                <tr>
+                    <td>ADIDAS BODY SPRAY WOMEN CLIMACOOL 150ML</td>
+                    <td>€30.00</td>
+                    <td>1</td>
+                    <td>€30.00</td>
+                </tr>
+                <tr>
+                    <td>Enchanteur Stunning Perfumed Deo Spray for Women 150ml</td>
+                    <td>€60.00</td>
+                    <td>1</td>
+                    <td>€60.00</td>
+                </tr>
+                <tr>
+                    <td>Fogg Marco Body Spray 120ml</td>
+                    <td>€120.00</td>
+                    <td>2</td>
+                    <td>€240.00</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="totals">
+            <div class="total-line">
+                <span>Subtotal:</span>
+                <span>€430.00</span>
+            </div>
+            <div class="total-line">
+                <span>VAT (20%):</span>
+                <span>€86.00</span>
+            </div>
+            <div class="total-line total-final">
+                <span>Total:</span>
+                <span>€516.00</span>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Thank you for your purchase!</p>
+        </div>
+    </div>
+    
+    <button class="print-button no-print" onclick="window.print()">
+        Print / PDF
+    </button>
+</body>
+</html>

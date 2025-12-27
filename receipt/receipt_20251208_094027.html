@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .totals {
+            margin-top: 20px;
+            text-align: right;
+        }
+        .total-line {
+            padding: 5px 0;
+        }
+        .total-final {
+            font-size: 1.2em;
+            font-weight: bold;
+            border-top: 2px solid #333;
+            padding-top: 10px;
+        }
+        .timestamp {
+            text-align: center;
+            color: #666;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Receipt</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Unit Price</th>
+                <th>Qty</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>14</td>
+                <td>Charlie Revlon Silver EDT Perfume for Women 100ML</td>
+                <td>Perfume</td>
+                <td>£300.00</td>
+                <td>7</td>
+                <td>£2100.00</td>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td>Jovan White Musk Edc Perfume For Men 88Ml</td>
+                <td>Perfume</td>
+                <td>£300.00</td>
+                <td>3</td>
+                <td>£900.00</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="totals">
+        <div class="total-line">Subtotal (excl. VAT): £3000.00</div>
+        <div class="total-line">VAT (20%): £600.00</div>
+        <div class="total-line total-final">Total (incl. VAT): £3600.00</div>
+    </div>
+    
+    <div class="timestamp">
+        <p>Generated: 2025-12-08 09:40:27</p>
+    </div>
+</body>
+</html>
