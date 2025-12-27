@@ -23,9 +23,9 @@ REGION = "frankfurt"  # Options: frankfurt, oregon, singapore
 def get_headers():
     """Get API headers with authentication."""
     if not RENDER_API_KEY:
-        print("❌ ERROR: RENDER_API_KEY is not set!")
-        print("📝 Get your API key from: https://dashboard.render.com/account/api-keys")
-        print("📝 Then edit this script and set RENDER_API_KEY = 'your-key-here'")
+        print("[ERROR] RENDER_API_KEY is not set!")
+        print("[INFO] Get your API key from: https://dashboard.render.com/account/api-keys")
+        print("[INFO] Then edit this script and set RENDER_API_KEY = 'your-key-here'")
         sys.exit(1)
     
     return {
@@ -36,21 +36,21 @@ def get_headers():
 
 def check_api_key():
     """Check if API key is valid."""
-    print("🔑 Checking API key...")
+    print("[CHECK] Checking API key...")
     headers = get_headers()
     response = requests.get(f"{RENDER_API_BASE}/owners", headers=headers)
     
     if response.status_code == 200:
-        print("✅ API key is valid!")
+        print("[OK] API key is valid!")
         return True
     else:
-        print(f"❌ API key check failed: {response.status_code}")
+        print(f"[ERROR] API key check failed: {response.status_code}")
         print(f"Response: {response.text}")
         return False
 
 def get_owner_id():
     """Get the owner (user/team) ID."""
-    print("👤 Getting owner ID...")
+    print("[INFO] Getting owner ID...")
     headers = get_headers()
     response = requests.get(f"{RENDER_API_BASE}/owners", headers=headers)
     
@@ -58,18 +58,18 @@ def get_owner_id():
         owners = response.json()
         if owners:
             owner_id = owners[0]['owner']['id']
-            print(f"✅ Found owner ID: {owner_id}")
+            print(f"[OK] Found owner ID: {owner_id}")
             return owner_id
         else:
-            print("❌ No owners found")
+            print("[ERROR] No owners found")
             return None
     else:
-        print(f"❌ Failed to get owner: {response.status_code}")
+        print(f"[ERROR] Failed to get owner: {response.status_code}")
         return None
 
 def create_service(owner_id):
     """Create a new web service on Render."""
-    print(f"🚀 Creating service '{SERVICE_NAME}'...")
+    print(f"[DEPLOY] Creating service '{SERVICE_NAME}'...")
     
     headers = get_headers()
     
@@ -79,17 +79,20 @@ def create_service(owner_id):
         "ownerId": owner_id,
         "repo": REPO_URL,
         "branch": "main",
-        "runtime": "python",
-        "region": REGION,
-        "planId": "starter",  # Use "free" for free tier
-        "buildCommand": "pip install -r requirements_resnet.txt",
-        "startCommand": "python app.py",
-        "envVars": [
-            {
-                "key": "PYTHON_VERSION",
-                "value": "3.11.0"
+        "serviceDetails": {
+            "runtime": "python",
+            "region": REGION,
+            "envSpecificDetails": {
+                "buildCommand": "pip install -r requirements_resnet.txt",
+                "startCommand": "python app.py",
+                "envVars": [
+                    {
+                        "key": "PYTHON_VERSION",
+                        "value": "3.11.0"
+                    }
+                ]
             }
-        ]
+        }
     }
     
     response = requests.post(
@@ -101,11 +104,13 @@ def create_service(owner_id):
     if response.status_code == 201:
         service = response.json()
         service_id = service['service']['id']
-        print(f"✅ Service created! ID: {service_id}")
-        print(f"🌐 Service URL: {service['service'].get('serviceDetails', {}).get('url', 'N/A')}")
+        print(f"[OK] Service created! ID: {service_id}")
+        url = service['service'].get('serviceDetails', {}).get('url', 'N/A')
+        if url != 'N/A':
+            print(f"[URL] Service URL: {url}")
         return service_id
     else:
-        print(f"❌ Failed to create service: {response.status_code}")
+        print(f"[ERROR] Failed to create service: {response.status_code}")
         print(f"Response: {response.text}")
         return None
 
@@ -121,8 +126,8 @@ def check_service_status(service_id):
 
 def wait_for_deployment(service_id, timeout=1800):
     """Wait for deployment to complete."""
-    print("⏳ Waiting for deployment to complete...")
-    print("   (This may take 10-15 minutes for first build)")
+    print("[WAIT] Waiting for deployment to complete...")
+    print("       (This may take 10-15 minutes for first build)")
     
     start_time = time.time()
     last_status = None
@@ -131,19 +136,19 @@ def wait_for_deployment(service_id, timeout=1800):
         status = check_service_status(service_id)
         
         if status != last_status:
-            print(f"📊 Status: {status}")
+            print(f"[STATUS] {status}")
             last_status = status
         
         if status == "live":
-            print("✅ Deployment complete! Service is live!")
+            print("[OK] Deployment complete! Service is live!")
             return True
         elif status == "build_failed":
-            print("❌ Build failed. Check logs in Render dashboard.")
+            print("[ERROR] Build failed. Check logs in Render dashboard.")
             return False
         
         time.sleep(30)  # Check every 30 seconds
     
-    print("⏰ Timeout waiting for deployment")
+    print("[TIMEOUT] Timeout waiting for deployment")
     return False
 
 def get_service_url(service_id):
@@ -160,21 +165,21 @@ def get_service_url(service_id):
 def main():
     """Main deployment function."""
     print("=" * 60)
-    print("🚀 Automated Render Deployment")
+    print("Automated Render Deployment")
     print("=" * 60)
     print()
     
     # Check if API key is set
     if not RENDER_API_KEY:
-        print("❌ RENDER_API_KEY is not set!")
+        print("[ERROR] RENDER_API_KEY is not set!")
         print()
-        print("📝 To get your API key:")
+        print("[INFO] To get your API key:")
         print("   1. Go to: https://dashboard.render.com/account/api-keys")
         print("   2. Click 'Create API Key'")
         print("   3. Copy the key")
         print("   4. Edit this script and set: RENDER_API_KEY = 'your-key-here'")
         print()
-        print("💡 Or set it as environment variable:")
+        print("[INFO] Or set it as environment variable:")
         print("   export RENDER_API_KEY='your-key-here'")
         print("   python deploy_to_render.py")
         sys.exit(1)
@@ -199,18 +204,18 @@ def main():
         if url:
             print()
             print("=" * 60)
-            print("🎉 DEPLOYMENT SUCCESSFUL!")
+            print("DEPLOYMENT SUCCESSFUL!")
             print("=" * 60)
-            print(f"🌐 Your app is live at: {url}")
-            print(f"🔍 Health check: {url}/api/health")
+            print(f"[URL] Your app is live at: {url}")
+            print(f"[HEALTH] Health check: {url}/api/health")
             print()
-            print("✅ Deployment complete!")
+            print("[OK] Deployment complete!")
         else:
-            print("⚠️  Service deployed but URL not available yet")
-            print("   Check Render dashboard for the URL")
+            print("[WARN] Service deployed but URL not available yet")
+            print("       Check Render dashboard for the URL")
     else:
         print()
-        print("❌ Deployment did not complete successfully")
+        print("[ERROR] Deployment did not complete successfully")
         print("   Check Render dashboard for details")
 
 if __name__ == "__main__":
